@@ -2,8 +2,29 @@
 A golang API with some hard coded values that make up my resume. v1 is super simplistic, but as I find more motivation I will begin pulling information dynamically through linkedin and other sources.
 
 ## How do I use this thing?
-So bascially you can curl the endpoints or navigate to them via a web browser. Everything will be text so even a cli based web based browser is fair game.
+So basically you can curl the endpoints or navigate to them via a web browser. Everything will be text so even a cli based web based browser is fair game.
 
+### Building Go Binary & Docker Image
+Assuming you have installed and configured go and docker.
+
+#### Build the Go Binary
+``` 
+go build --ldflags '-extldflags "-lm -lstdc++ -static"' -o resum-api resum-api.go
+```
+The special options are for packaging libc with the binary so that it can run within the alpine base image for docker.
+
+#### Build The Docker Image
+Assuming that you have docker installed.
+```
+docker image build -t resum-api:1.0 
+```
+
+### Run the Docker Image
+Again assuming that you have docker installed. Resum-API uses tcp/80, so asjust port mapping as necessary.
+```
+docker run -d -p 80:80 resum-api:1.0
+```
+ 
 ### Endpoints
 ```
 joey - displays a message
