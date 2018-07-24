@@ -1,4 +1,11 @@
-FROM alpine:3.1
+FROM golang:latest
+
 MAINTAINER Joey Grasso <me@joeygrasso.com>
-ADD resum-api /usr/bin/resum-api
-ENTRYPOINT ["resum-api"]
+
+WORKDIR /opt/
+
+ADD ./resum-api.go /
+
+RUN go build -o /opt/resum-api /resum-api.go
+
+CMD ["/opt/resum-api"]
